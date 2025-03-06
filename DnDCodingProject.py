@@ -4,17 +4,17 @@
 #App that allows users to roll a dice for combat in DnD. Also prints out a message to the user showing the outcome of their roll.
 
 import tkinter as tk #Import tkinter library for GUI development
-from tkinter import Toplevel #Import specific widgets
+from tkinter import Toplevel #Import specific widget
 from PIL import Image, ImageTk #Import Image and ImageTk for handling image display and tkinter
 
 import random #Import random function to be used for dice rolling
 
 #Function to open the d20 window
 def open_d20_window():
-    d20_window = Toplevel(window) #Create a new window for home screen
-    d20_window.title("Rolling a d20") #Set the title of the profile window
-    d20_window.geometry("500x300") #Set the size of the profile window
-    d20_window.configure(bg='lightblue') #Set the background color of the profile window
+    d20_window = Toplevel(window) #Create a new window for d20 rolling
+    d20_window.title("Rolling a d20") #Set the title of the d20 window
+    d20_window.geometry("500x300") #Set the size of the d20 window
+    d20_window.configure(bg='lightblue') #Set the background color of the d20 window
 
     #Load and display a JPEG image
     try:
@@ -22,7 +22,7 @@ def open_d20_window():
         photo = ImageTk.PhotoImage(img) #Convert the image into a format suitable for tkinter
         img_label = tk.Label(d20_window, image=photo) #Create a label to display the image
         img_label.image = photo #Keep a reference to avoid the image being garbage collected
-        img_label.pack() #Pack the image label into the main window
+        img_label.pack() #Pack the image label into the d20 window
     except FileNotFoundError: #Handle case where the image is not found
         tk.Label(d20_window, text="Image not found!", fg="red").pack() #Show an error message if the image is not found
     
@@ -34,11 +34,11 @@ def open_d20_window():
     def d20():
         roll_d20 = random.randrange(1,21) #Roll number between 1 and 20
         modifier = int(d20_modifier_entry.get()) #Input modifier from what user enters
-        if (modifier > 10) | (modifier < -5):
+        if (modifier > 10) | (modifier < -5): #Checks that the modifier entered is within the range of -5 to +10
             d20_result_label.config(text=f"The value you entered is not in the range of -5 to +10.") #Update result label
         else:
             add_modifier = roll_d20 + modifier #Add the modifier to the roll
-            if modifier >= 0:
+            if modifier >= 0: #Makes it so that + will be printed in front of the modifier for positive modifiers
                 final_modifier = "+" + str(modifier)
             else:
                 final_modifier = str(modifier)
@@ -64,15 +64,15 @@ def open_d20_window():
     d20_result_label.pack()
 
     #Exit Button
-    exit_button = tk.Button(d20_window, text="Exit", command=d20_window.destroy, bg='red') #Exit button to close the profile window
+    exit_button = tk.Button(d20_window, text="Exit", command=d20_window.destroy, bg='red') #Exit button to close the d20 window
     exit_button.pack(pady=5)
 
 #Function to open the d12 window
 def open_d12_window():
-    d12_window = Toplevel(window) #Create a new window for home screen
-    d12_window.title("Rolling a d12") #Set the title of the profile window
-    d12_window.geometry("500x300") #Set the size of the profile window
-    d12_window.configure(bg='yellow') #Set the background color of the profile window
+    d12_window = Toplevel(window) #Create a new window for d12 rolling
+    d12_window.title("Rolling a d12") #Set the title of the d12 window
+    d12_window.geometry("500x300") #Set the size of the d12 window
+    d12_window.configure(bg='yellow') #Set the background color of the d12 window
 
     #Load and display a JPEG image
     try:
@@ -80,7 +80,7 @@ def open_d12_window():
         photo = ImageTk.PhotoImage(img) #Convert the image into a format suitable for tkinter
         img_label = tk.Label(d12_window, image=photo) #Create a label to display the image
         img_label.image = photo #Keep a reference to avoid the image being garbage collected
-        img_label.pack() #Pack the image label into the main window
+        img_label.pack() #Pack the image label into the d12 window
     except FileNotFoundError: #Handle case where the image is not found
         tk.Label(d12_window, text="Image not found!", fg="red").pack() #Show an error message if the image is not found
 
@@ -92,11 +92,11 @@ def open_d12_window():
     def d12():
         roll_d12 = random.randrange(1,13) #Roll number between 1 and 12
         modifier = int(d12_modifier_entry.get()) #Input modifier from what user enters
-        if (modifier > 10) | (modifier < -5):
+        if (modifier > 10) | (modifier < -5): #Checks that the modifier entered is within the range of -5 to +10
             d12_result_label.config(text=f"The value you entered is not in the range of -5 to +10.") #Update result label
         else:
             d12_damage = roll_d12 + modifier #Add the modifier to the roll
-            if modifier >= 0:
+            if modifier >= 0: #Makes it so that + will be printed in front of the modifier for positive modifiers
                 final_modifier = "+" + str(modifier)
             else:
                 final_modifier = str(modifier)
@@ -115,15 +115,15 @@ def open_d12_window():
     d12_result_label.pack()
 
     #Exit Button
-    exit_button = tk.Button(d12_window, text="Exit", command=d12_window.destroy, bg='red') #Exit button to close the profile window
+    exit_button = tk.Button(d12_window, text="Exit", command=d12_window.destroy, bg='red') #Exit button to close the d12 window
     exit_button.pack(pady=5)
 
 #Function to open the d10 window
 def open_d10_window():
-    d10_window = Toplevel(window) #Create a new window for home screen
-    d10_window.title("Rolling a d10") #Set the title of the profile window
-    d10_window.geometry("500x300") #Set the size of the profile window
-    d10_window.configure(bg='green') #Set the background color of the profile window
+    d10_window = Toplevel(window) #Create a new window for d10 rolling
+    d10_window.title("Rolling a d10") #Set the title of the d10 window
+    d10_window.geometry("500x300") #Set the size of the d10 window
+    d10_window.configure(bg='green') #Set the background color of the d10 window
 
     #Load and display a JPEG image
     try:
@@ -131,7 +131,7 @@ def open_d10_window():
         photo = ImageTk.PhotoImage(img) #Convert the image into a format suitable for tkinter
         img_label = tk.Label(d10_window, image=photo) #Create a label to display the image
         img_label.image = photo #Keep a reference to avoid the image being garbage collected
-        img_label.pack() #Pack the image label into the main window
+        img_label.pack() #Pack the image label into the d10 window
     except FileNotFoundError: #Handle case where the image is not found
         tk.Label(d10_window, text="Image not found!", fg="red").pack() #Show an error message if the image is not found
 
@@ -143,11 +143,11 @@ def open_d10_window():
     def d10():
         roll_d10 = random.randrange(1,11) #Roll number between 1 and 10
         modifier = int(d10_modifier_entry.get()) #Input modifier from what user enters
-        if (modifier > 10) | (modifier < -5):
+        if (modifier > 10) | (modifier < -5): #Checks that the modifier entered is within the range of -5 to +10
             d10_result_label.config(text=f"The value you entered is not in the range of -5 to +10.") #Update result label
         else:
             d10_damage = roll_d10 + modifier #Add the modifier to the roll
-            if modifier >= 0:
+            if modifier >= 0: #Makes it so that + will be printed in front of the modifier for positive modifiers
                 final_modifier = "+" + str(modifier)
             else:
                 final_modifier = str(modifier)
@@ -166,15 +166,15 @@ def open_d10_window():
     d10_result_label.pack()
 
     #Exit Button
-    exit_button = tk.Button(d10_window, text="Exit", command=d10_window.destroy, bg='red') #Exit button to close the profile window
+    exit_button = tk.Button(d10_window, text="Exit", command=d10_window.destroy, bg='red') #Exit button to close the d10 window
     exit_button.pack(pady=5)
 
 #Function to open the d8 window
 def open_d8_window():
-    d8_window = Toplevel(window) #Create a new window for home screen
-    d8_window.title("Rolling a d8") #Set the title of the profile window
-    d8_window.geometry("500x300") #Set the size of the profile window
-    d8_window.configure(bg='purple') #Set the background color of the profile window
+    d8_window = Toplevel(window) #Create a new window for d8 rolling
+    d8_window.title("Rolling a d8") #Set the title of the d8 window
+    d8_window.geometry("500x300") #Set the size of the d8 window
+    d8_window.configure(bg='purple') #Set the background color of the d8 window
 
     #Load and display a JPEG image
     try:
@@ -182,7 +182,7 @@ def open_d8_window():
         photo = ImageTk.PhotoImage(img) #Convert the image into a format suitable for tkinter
         img_label = tk.Label(d8_window, image=photo) #Create a label to display the image
         img_label.image = photo #Keep a reference to avoid the image being garbage collected
-        img_label.pack() #Pack the image label into the main window
+        img_label.pack() #Pack the image label into the d8 window
     except FileNotFoundError: #Handle case where the image is not found
         tk.Label(d8_window, text="Image not found!", fg="red").pack() #Show an error message if the image is not found
 
@@ -194,11 +194,11 @@ def open_d8_window():
     def d8():
         roll_d8 = random.randrange(1,9) #Roll number between 1 and 8
         modifier = int(d8_modifier_entry.get()) #Input modifier from what user enters
-        if (modifier > 10) | (modifier < -5):
+        if (modifier > 10) | (modifier < -5): #Checks that the modifier entered is within the range of -5 to +10
             d8_result_label.config(text=f"The value you entered is not in the range of -5 to +10.") #Update result label
         else:
             d8_damage = roll_d8 + modifier #Add the modifier to the roll
-            if modifier >= 0:
+            if modifier >= 0: #Makes it so that + will be printed in front of the modifier for positive modifiers
                 final_modifier = "+" + str(modifier)
             else:
                 final_modifier = str(modifier)
@@ -217,15 +217,15 @@ def open_d8_window():
     d8_result_label.pack()
 
     #Exit Button
-    exit_button = tk.Button(d8_window, text="Exit", command=d8_window.destroy, bg='red') #Exit button to close the profile window
+    exit_button = tk.Button(d8_window, text="Exit", command=d8_window.destroy, bg='red') #Exit button to close the d8 window
     exit_button.pack(pady=5)
 
 #Function to open the d6 window
 def open_d6_window():
-    d6_window = Toplevel(window) #Create a new window for home screen
-    d6_window.title("Rolling a d6") #Set the title of the profile window
-    d6_window.geometry("500x300") #Set the size of the profile window
-    d6_window.configure(bg='orange') #Set the background color of the profile window
+    d6_window = Toplevel(window) #Create a new window for d6 rolling
+    d6_window.title("Rolling a d6") #Set the title of the d6 window
+    d6_window.geometry("500x300") #Set the size of the d6 window
+    d6_window.configure(bg='orange') #Set the background color of the d6 window
 
     #Load and display a JPEG image
     try:
@@ -233,7 +233,7 @@ def open_d6_window():
         photo = ImageTk.PhotoImage(img) #Convert the image into a format suitable for tkinter
         img_label = tk.Label(d6_window, image=photo) #Create a label to display the image
         img_label.image = photo #Keep a reference to avoid the image being garbage collected
-        img_label.pack() #Pack the image label into the main window
+        img_label.pack() #Pack the image label into the d6 window
     except FileNotFoundError: #Handle case where the image is not found
         tk.Label(d6_window, text="Image not found!", fg="red").pack() #Show an error message if the image is not found
 
@@ -245,11 +245,11 @@ def open_d6_window():
     def d6():
         roll_d6 = random.randrange(1,7) #Roll number between 1 and 6
         modifier = int(d6_modifier_entry.get()) #Input modifier from what user enters
-        if (modifier > 10) | (modifier < -5):
+        if (modifier > 10) | (modifier < -5): #Checks that the modifier entered is within the range of -5 to +10
             d6_result_label.config(text=f"The value you entered is not in the range of -5 to +10.") #Update result label
         else:
             d6_damage = roll_d6 + modifier #Add the modifier to the roll
-            if modifier >= 0:
+            if modifier >= 0: #Makes it so that + will be printed in front of the modifier for positive modifiers
                 final_modifier = "+" + str(modifier)
             else:
                 final_modifier = str(modifier)
@@ -268,15 +268,15 @@ def open_d6_window():
     d6_result_label.pack()
 
     #Exit Button
-    exit_button = tk.Button(d6_window, text="Exit", command=d6_window.destroy, bg='red') #Exit button to close the profile window
+    exit_button = tk.Button(d6_window, text="Exit", command=d6_window.destroy, bg='red') #Exit button to close the d6 window
     exit_button.pack(pady=5)
 
 #Function to open the d4 window
 def open_d4_window():
-    d4_window = Toplevel(window) #Create a new window for home screen
-    d4_window.title("Rolling a d4") #Set the title of the profile window
-    d4_window.geometry("500x300") #Set the size of the profile window
-    d4_window.configure(bg='blue') #Set the background color of the profile window
+    d4_window = Toplevel(window) #Create a new window for d4 rolling
+    d4_window.title("Rolling a d4") #Set the title of the d4 window
+    d4_window.geometry("500x300") #Set the size of the d4 window
+    d4_window.configure(bg='blue') #Set the background color of the d4 window
 
     #Load and display a JPEG image
     try:
@@ -284,7 +284,7 @@ def open_d4_window():
         photo = ImageTk.PhotoImage(img) #Convert the image into a format suitable for tkinter
         img_label = tk.Label(d4_window, image=photo) #Create a label to display the image
         img_label.image = photo #Keep a reference to avoid the image being garbage collected
-        img_label.pack() #Pack the image label into the main window
+        img_label.pack() #Pack the image label into the d4 window
     except FileNotFoundError: #Handle case where the image is not found
         tk.Label(d4_window, text="Image not found!", fg="red").pack() #Show an error message if the image is not found
 
@@ -296,11 +296,11 @@ def open_d4_window():
     def d4():
         roll_d4 = random.randrange(1,5) #Roll number between 1 and 4
         modifier = int(d4_modifier_entry.get()) #Input modifier from what user enters
-        if (modifier > 10) | (modifier < -5):
+        if (modifier > 10) | (modifier < -5): #Checks that the modifier entered is within the range of -5 to +10
             d4_result_label.config(text=f"The value you entered is not in the range of -5 to +10.") #Update result label
         else:
             d4_damage = roll_d4 + modifier #Add the modifier to the roll
-            if modifier >= 0:
+            if modifier >= 0: #Makes it so that + will be printed in front of the modifier for positive modifiers
                 final_modifier = "+" + str(modifier)
             else:
                 final_modifier = str(modifier)
@@ -319,13 +319,13 @@ def open_d4_window():
     d4_result_label.pack()
 
     #Exit Button
-    exit_button = tk.Button(d4_window, text="Exit", command=d4_window.destroy, bg='red') #Exit button to close the profile window
+    exit_button = tk.Button(d4_window, text="Exit", command=d4_window.destroy, bg='red') #Exit button to close the d4 window
     exit_button.pack(pady=5)
 
 #Create the main window
 window = tk.Tk() #Create the main window
 window.title("Dungeons and Dragons Dice Roller for Combat") #Title
-window.geometry("500x650") #Set the size of the profile window
+window.geometry("500x650") #Set the size of the main window
 window.configure(bg='red') #Set the background color of the main window
 
 #Load and display a JPEG image
@@ -343,7 +343,7 @@ instruction_label = tk.Label(window, text="This program allows you to simulate r
 instruction_label.pack()
 
 #Button to go to d20 window
-d20_button = tk.Button(window, text="Roll a d20", command=open_d20_window, bg="lightblue") #Button to open the profile window
+d20_button = tk.Button(window, text="Roll a d20", command=open_d20_window, bg="lightblue")
 d20_button.pack(pady=10)
 
 #Button to go to d12 window
