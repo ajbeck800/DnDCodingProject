@@ -9,60 +9,11 @@ from PIL import Image, ImageTk #Import Image and ImageTk for handling image disp
 
 import random #Import random function to be used for dice rolling
 
-#Function to roll a d20
-def d20():
-    roll_d20 = random.randrange(1,21) #Roll number between 1 and 20
-    d20_modifier = int(d20_modifier_entry.get()) #Input modifier from what user enters
-    add_modifier = roll_d20 + d20_modifier #Add the modifier to the roll
-    if add_modifier >= 19: #Displays different results depending on how high or low a user rolls
-        d20_result_label.config(text=f"You rolled a {roll_d20} with a modifier of {d20_modifier}. You rolled high enough to deal some extra damage!") #Update result label
-    elif (add_modifier < 19) & (add_modifier >= 13):
-        d20_result_label.config(text=f"You rolled a {roll_d20} with a modifier of {d20_modifier}. You rolled high enough to deal damage!") #Update result label
-    elif (add_modifier < 13) & (add_modifier >= 7):
-        d20_result_label.config(text=f"You rolled a {roll_d20} with a modifier of {d20_modifier}. Your roll was not very high, so your damage will be reduced.") #Update result label
-    else:
-        d20_result_label.config(text=f"You rolled a {roll_d20} with a modifier of {d20_modifier}. Your roll was so low that your attack missed!") #Update result label
-
-#Function to roll a d12
-def d12():
-    roll_d12 = random.randrange(1,13) #Roll number between 1 and 12
-    d12_modifier = int(d12_modifier_entry.get()) #Input modifier from what user enters
-    d12_damage = roll_d12 + d12_modifier #Add the modifier to the roll
-    d12_result_label.config(text=f"You rolled a {roll_d12} with a modifier of {d12_modifier}. You dealt {d12_damage} damage!") #Update result label
-
-#Function to roll a d10
-def d10():
-    roll_d10 = random.randrange(1,11) #Roll number between 1 and 10
-    d10_modifier = int(d10_modifier_entry.get()) #Input modifier from what user enters
-    d10_damage = roll_d10 + d10_modifier #Add the modifier to the roll
-    d10_result_label.config(text=f"You rolled a {roll_d10} with a modifier of {d10_modifier}. You dealt {d10_damage} damage!") #Update result label
-
-#Function to roll a d8
-def d8():
-    roll_d8 = random.randrange(1,9) #Roll number between 1 and 8
-    d8_modifier = int(d8_modifier_entry.get()) #Input modifier from what user enters
-    d8_damage = roll_d8 + d8_modifier #Add the modifier to the roll
-    d8_result_label.config(text=f"You rolled a {roll_d8} with a modifier of {d8_modifier}. You dealt {d8_damage} damage!") #Update result label
-
-#Function to roll a d6
-def d6():
-    roll_d6 = random.randrange(1,7) #Roll number between 1 and 6
-    d6_modifier = int(d6_modifier_entry.get()) #Input modifier from what user enters
-    d6_damage = roll_d6 + d6_modifier #Add the modifier to the roll
-    d6_result_label.config(text=f"You rolled a {roll_d6} with a modifier of {d6_modifier}. You dealt {d6_damage} damage!") #Update result label
-
-#Function to roll a d4
-def d4():
-    roll_d4 = random.randrange(1,5) #Roll number between 1 and 4
-    d4_modifier = int(d4_modifier_entry.get()) #Input modifier from what user enters
-    d4_damage = roll_d4 + d4_modifier #Add the modifier to the roll
-    d4_result_label.config(text=f"You rolled a {roll_d4} with a modifier of {d4_modifier}. You dealt {d4_damage} damage!") #Update result label
-
 #Function to open the d20 window
 def open_d20_window():
     d20_window = Toplevel(window) #Create a new window for home screen
     d20_window.title("Rolling a d20") #Set the title of the profile window
-    d20_window.geometry("300x300") #Set the size of the profile window
+    d20_window.geometry("500x300") #Set the size of the profile window
     d20_window.configure(bg='lightblue') #Set the background color of the profile window
 
     #Load and display a JPEG image
@@ -76,8 +27,29 @@ def open_d20_window():
         tk.Label(d20_window, text="Image not found!", fg="red").pack() #Show an error message if the image is not found
     
     #Label for modifier input
-    d20_modifier_label = tk.Label(d20_window, text="Enter modifier:")
+    d20_modifier_label = tk.Label(d20_window, text="Enter a modifier in the range of -5 to +10:")
     d20_modifier_label.pack()
+
+    #Function to roll a d20
+    def d20():
+        roll_d20 = random.randrange(1,21) #Roll number between 1 and 20
+        modifier = int(d20_modifier_entry.get()) #Input modifier from what user enters
+        if (modifier > 10) | (modifier < -5):
+            d20_result_label.config(text=f"The value you entered is not in the range of -5 to +10.") #Update result label
+        else:
+            add_modifier = roll_d20 + modifier #Add the modifier to the roll
+            if modifier >= 0:
+                final_modifier = "+" + str(modifier)
+            else:
+                final_modifier = str(modifier)
+            if add_modifier >= 19: #Displays different results depending on how high or low a user rolls
+                d20_result_label.config(text=f"You rolled a {roll_d20} with a modifier of {final_modifier}.\nYou rolled high enough to deal some extra damage!") #Update result label
+            elif (add_modifier < 19) & (add_modifier >= 13):
+                d20_result_label.config(text=f"You rolled a {roll_d20} with a modifier of {final_modifier}.\nYou rolled high enough to deal damage!") #Update result label
+            elif (add_modifier < 13) & (add_modifier >= 7):
+                d20_result_label.config(text=f"You rolled a {roll_d20} with a modifier of {final_modifier}.\nYour roll was not very high, so your damage will be reduced.") #Update result label
+            else:
+                d20_result_label.config(text=f"You rolled a {roll_d20} with a modifier of {final_modifier}.\nYour roll was so low that your attack missed!") #Update result label
 
     #Entry widget to input modifier
     d20_modifier_entry = tk.Entry(d20_window)
@@ -99,7 +71,7 @@ def open_d20_window():
 def open_d12_window():
     d12_window = Toplevel(window) #Create a new window for home screen
     d12_window.title("Rolling a d12") #Set the title of the profile window
-    d12_window.geometry("300x300") #Set the size of the profile window
+    d12_window.geometry("500x300") #Set the size of the profile window
     d12_window.configure(bg='yellow') #Set the background color of the profile window
 
     #Load and display a JPEG image
@@ -113,8 +85,22 @@ def open_d12_window():
         tk.Label(d12_window, text="Image not found!", fg="red").pack() #Show an error message if the image is not found
 
     #Label for modifier input
-    d12_modifier_label = tk.Label(d12_window, text="Enter modifier:")
+    d12_modifier_label = tk.Label(d12_window, text="Enter a modifier in the range of -5 to +10:")
     d12_modifier_label.pack()
+
+    #Function to roll a d12
+    def d12():
+        roll_d12 = random.randrange(1,13) #Roll number between 1 and 12
+        modifier = int(d12_modifier_entry.get()) #Input modifier from what user enters
+        if (modifier > 10) | (modifier < -5):
+            d12_result_label.config(text=f"The value you entered is not in the range of -5 to +10.") #Update result label
+        else:
+            d12_damage = roll_d12 + modifier #Add the modifier to the roll
+            if modifier >= 0:
+                final_modifier = "+" + str(modifier)
+            else:
+                final_modifier = str(modifier)
+            d12_result_label.config(text=f"You rolled a {roll_d12} with a modifier of {final_modifier}.\nYou dealt {d12_damage} damage!") #Update result label
 
     #Entry widget to input modifier
     d12_modifier_entry = tk.Entry(d12_window)
@@ -136,7 +122,7 @@ def open_d12_window():
 def open_d10_window():
     d10_window = Toplevel(window) #Create a new window for home screen
     d10_window.title("Rolling a d10") #Set the title of the profile window
-    d10_window.geometry("300x300") #Set the size of the profile window
+    d10_window.geometry("500x300") #Set the size of the profile window
     d10_window.configure(bg='green') #Set the background color of the profile window
 
     #Load and display a JPEG image
@@ -150,8 +136,22 @@ def open_d10_window():
         tk.Label(d10_window, text="Image not found!", fg="red").pack() #Show an error message if the image is not found
 
     #Label for modifier input
-    d10_modifier_label = tk.Label(d10_window, text="Enter modifier:")
+    d10_modifier_label = tk.Label(d10_window, text="Enter a modifier in the range of -5 to +10:")
     d10_modifier_label.pack()
+
+    #Function to roll a d10
+    def d10():
+        roll_d10 = random.randrange(1,11) #Roll number between 1 and 10
+        modifier = int(d10_modifier_entry.get()) #Input modifier from what user enters
+        if (modifier > 10) | (modifier < -5):
+            d10_result_label.config(text=f"The value you entered is not in the range of -5 to +10.") #Update result label
+        else:
+            d10_damage = roll_d10 + modifier #Add the modifier to the roll
+            if modifier >= 0:
+                final_modifier = "+" + str(modifier)
+            else:
+                final_modifier = str(modifier)
+            d10_result_label.config(text=f"You rolled a {roll_d10} with a modifier of {final_modifier}.\nYou dealt {d10_damage} damage!") #Update result label
 
     #Entry widget to input modifier
     d10_modifier_entry = tk.Entry(d10_window)
@@ -173,7 +173,7 @@ def open_d10_window():
 def open_d8_window():
     d8_window = Toplevel(window) #Create a new window for home screen
     d8_window.title("Rolling a d8") #Set the title of the profile window
-    d8_window.geometry("300x300") #Set the size of the profile window
+    d8_window.geometry("500x300") #Set the size of the profile window
     d8_window.configure(bg='purple') #Set the background color of the profile window
 
     #Load and display a JPEG image
@@ -187,8 +187,22 @@ def open_d8_window():
         tk.Label(d8_window, text="Image not found!", fg="red").pack() #Show an error message if the image is not found
 
     #Label for modifier input
-    d8_modifier_label = tk.Label(d8_window, text="Enter modifier:")
+    d8_modifier_label = tk.Label(d8_window, text="Enter a modifier in the range of -5 to +10:")
     d8_modifier_label.pack()
+
+    #Function to roll a d8
+    def d8():
+        roll_d8 = random.randrange(1,9) #Roll number between 1 and 8
+        modifier = int(d8_modifier_entry.get()) #Input modifier from what user enters
+        if (modifier > 10) | (modifier < -5):
+            d8_result_label.config(text=f"The value you entered is not in the range of -5 to +10.") #Update result label
+        else:
+            d8_damage = roll_d8 + modifier #Add the modifier to the roll
+            if modifier >= 0:
+                final_modifier = "+" + str(modifier)
+            else:
+                final_modifier = str(modifier)
+            d8_result_label.config(text=f"You rolled a {roll_d8} with a modifier of {final_modifier}.\nYou dealt {d8_damage} damage!") #Update result label
 
     #Entry widget to input modifier
     d8_modifier_entry = tk.Entry(d8_window)
@@ -210,7 +224,7 @@ def open_d8_window():
 def open_d6_window():
     d6_window = Toplevel(window) #Create a new window for home screen
     d6_window.title("Rolling a d6") #Set the title of the profile window
-    d6_window.geometry("300x300") #Set the size of the profile window
+    d6_window.geometry("500x300") #Set the size of the profile window
     d6_window.configure(bg='orange') #Set the background color of the profile window
 
     #Load and display a JPEG image
@@ -224,8 +238,22 @@ def open_d6_window():
         tk.Label(d6_window, text="Image not found!", fg="red").pack() #Show an error message if the image is not found
 
     #Label for modifier input
-    d6_modifier_label = tk.Label(d6_window, text="Enter modifier:")
+    d6_modifier_label = tk.Label(d6_window, text="Enter a modifier in the range of -5 to +10:")
     d6_modifier_label.pack()
+
+    #Function to roll a d6
+    def d6():
+        roll_d6 = random.randrange(1,7) #Roll number between 1 and 6
+        modifier = int(d6_modifier_entry.get()) #Input modifier from what user enters
+        if (modifier > 10) | (modifier < -5):
+            d6_result_label.config(text=f"The value you entered is not in the range of -5 to +10.") #Update result label
+        else:
+            d6_damage = roll_d6 + modifier #Add the modifier to the roll
+            if modifier >= 0:
+                final_modifier = "+" + str(modifier)
+            else:
+                final_modifier = str(modifier)
+            d6_result_label.config(text=f"You rolled a {roll_d6} with a modifier of {final_modifier}.\nYou dealt {d6_damage} damage!") #Update result label
 
     #Entry widget to input modifier
     d6_modifier_entry = tk.Entry(d6_window)
@@ -247,7 +275,7 @@ def open_d6_window():
 def open_d4_window():
     d4_window = Toplevel(window) #Create a new window for home screen
     d4_window.title("Rolling a d4") #Set the title of the profile window
-    d4_window.geometry("300x300") #Set the size of the profile window
+    d4_window.geometry("500x300") #Set the size of the profile window
     d4_window.configure(bg='blue') #Set the background color of the profile window
 
     #Load and display a JPEG image
@@ -261,8 +289,22 @@ def open_d4_window():
         tk.Label(d4_window, text="Image not found!", fg="red").pack() #Show an error message if the image is not found
 
     #Label for modifier input
-    d4_modifier_label = tk.Label(d4_window, text="Enter modifier:")
+    d4_modifier_label = tk.Label(d4_window, text="Enter a modifier in the range of -5 to +10:")
     d4_modifier_label.pack()
+
+    #Function to roll a d4
+    def d4():
+        roll_d4 = random.randrange(1,5) #Roll number between 1 and 4
+        modifier = int(d4_modifier_entry.get()) #Input modifier from what user enters
+        if (modifier > 10) | (modifier < -5):
+            d4_result_label.config(text=f"The value you entered is not in the range of -5 to +10.") #Update result label
+        else:
+            d4_damage = roll_d4 + modifier #Add the modifier to the roll
+            if modifier >= 0:
+                final_modifier = "+" + str(modifier)
+            else:
+                final_modifier = str(modifier)
+            d4_result_label.config(text=f"You rolled a {roll_d4} with a modifier of {final_modifier}.\nYou dealt {d4_damage} damage!") #Update result label
 
     #Entry widget to input modifier
     d4_modifier_entry = tk.Entry(d4_window)
@@ -283,7 +325,7 @@ def open_d4_window():
 #Create the main window
 window = tk.Tk() #Create the main window
 window.title("Dungeons and Dragons Dice Roller for Combat") #Title
-window.geometry("500x600") #Set the size of the profile window
+window.geometry("500x650") #Set the size of the profile window
 window.configure(bg='red') #Set the background color of the main window
 
 #Load and display a JPEG image
@@ -295,6 +337,10 @@ try:
     img_label.pack() #Pack the image label into the main window
 except FileNotFoundError: #Handle case where the image is not found
     tk.Label(window, text="Image not found!", fg="red").pack() #Show an error message if the image is not found
+
+#Instructions
+instruction_label = tk.Label(window, text="This program allows you to simulate rolling dice for combat in DnD.\nThe d20 is used to determine if your attack hits.\nThe other dice determine the amount of damage you deal.\nUse the buttons below to select the die you would like to roll:") #Label for distance input
+instruction_label.pack()
 
 #Button to go to d20 window
 d20_button = tk.Button(window, text="Roll a d20", command=open_d20_window, bg="lightblue") #Button to open the profile window
